@@ -18,10 +18,11 @@ import java.util.List;
 public class User {
     @Id
     private ObjectId id;
-    
     @NonNull
     @Indexed(unique = true)
     private String username;
+    private String email;
+    private boolean sentimentAnalysis;
     @NonNull
     private String password;
     @DBRef
