@@ -1,0 +1,66 @@
+
+spring:
+  application:
+    name: journalApp
+  mongodb:
+    uri: ${MONGODB_URI}
+    database: journaldb
+  data:
+    mongodb:
+      auto-index-creation: true
+    redis:
+      url: ${REDIS_URL}
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${JAVA_EMAIL}
+    password: ${JAVA_EMAIL_PASSWORD}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+  kafka:
+    bootstrap-servers: ${KAFKA_SERVERS}
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+    consumer:
+      group-id: weekly-sentiment-group
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring:
+          json:
+            trusted:
+              packages: com.engdigest.journalApp.model
+    properties:
+      security:
+        protocol: SASL_SSL
+      sasl:
+        mechanism: PLAIN
+        jaas:
+          config: org.apache.kafka.common.security.plain.PlainLoginModule required username="X" password="X";
+      session:
+        timeout:
+          ms: 45000
+
+server:
+  #servlet:
+  #context-path: /journal
+  port: 8080
+    #logging:
+    #level:
+    #com:
+    #engdigest:
+    #journalApp: TRACE
+    #logging:
+    #level:
+    #root: ERROR   #this causes only error logs to be printed
+
+    #logging:
+  #level:
+  #root: OFF   #this causes no logs to be printed
+
+weather_api_key: ${WEATHER_API_KEY}
